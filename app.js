@@ -8,4 +8,6 @@ app.get('/', (req, res) => {
   res.send('Welcome to this API');
 });
 
-app.listen(port, () => {});
+app.listen(port, () => {
+  // console.log(`Server running at ${port}`)
+});
