@@ -22,15 +22,30 @@ function routes(Book){
             });
         });
 
-        booksRouter.route('/books/:id')
+    booksRouter.route('/books/:id')
         .get((req, res) => {
             Book.findById(req.params.id, (err, book) => {
             if (err) {
                 return res.send(err);
             }
             return res.json(book);
-    });
-  });
+            });
+
+        })
+        .put((req, res) => {
+            Book.findById(req.params.id, (err, book) => {
+                if (err) {
+                    return res.send(err);
+                }
+                book.title = req.body.title;
+                book.author = req.body.author;
+                book.genre = req.body.genre;
+                book.read = req.body.read;
+                book.save();
+                return res.json(book);
+
+            });
+        });
 
   return booksRouter;
 
