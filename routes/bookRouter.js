@@ -28,7 +28,7 @@ function routes(Book){
                 return res.send(err);
             }
             if (book) {
-                console.log(book);
+                // attach book model schema/data to request object
                 req.book = book;
                 return next();
             }
@@ -44,13 +44,32 @@ function routes(Book){
             book.author = req.body.author;
             book.genre = req.body.genre;
             book.read = req.body.read;
-            book.save();
+            book.save((err) => {
+                if (err) {
+                    res.send(err);
+                }
+                return res.json(book);
+            });
             return res.json(book);
         })
         .patch((req, res) => {
             const { book } = req;
+            // prevent overiding id
+            if (req.body._id) {
+                delete req.body._id;
+            }
+            Object.entries(req.body).forEach((item) => {
+                const key = item[0];
+                const val = item[1];
+                book[key] = val;
+            });
+            req.book.save((err) => {
+                if (err) {
+                    return res.send(err);
+                }
+                return res.json(book);
+            });
 
-            Object.entries(req.body)
 
         });
   return booksRouter;
