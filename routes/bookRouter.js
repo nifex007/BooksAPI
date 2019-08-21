@@ -22,31 +22,37 @@ function routes(Book){
             });
         });
 
-    booksRouter.route('/books/:id')
-        .get((req, res) => {
-            Book.findById(req.params.id, (err, book) => {
+    booksRouter.use('/books/:id', (req, res, next) => {
+        Book.findById(req.params.id, (err, book) => {
             if (err) {
                 return res.send(err);
             }
-            return res.json(book);
-            });
-
-        })
-        .put((req, res) => {
-            Book.findById(req.params.id, (err, book) => {
-                if (err) {
-                    return res.send(err);
-                }
-                book.title = req.body.title;
-                book.author = req.body.author;
-                book.genre = req.body.genre;
-                book.read = req.body.read;
-                book.save();
-                return res.json(book);
-
-            });
+            if (book) {
+                console.log(book);
+                req.book = book;
+                return next();
+            }
+            return res.sendStatus(404);
         });
+    });
 
+    booksRouter.route('/books/:id')
+        .get((req, res) => res.json(req.book))
+        .put((req, res) => {
+            const { book } = req;
+            book.title = req.body.title;
+            book.author = req.body.author;
+            book.genre = req.body.genre;
+            book.read = req.body.read;
+            book.save();
+            return res.json(book);
+        })
+        .patch((req, res) => {
+            const { book } = req;
+
+            Object.entries(req.body)
+
+        });
   return booksRouter;
 
 }
