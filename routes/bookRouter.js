@@ -69,8 +69,14 @@ function routes(Book){
                 }
                 return res.json(book);
             });
-
-
+        })
+        .delete((req, res) => {
+            req.book.remove((err) => {
+                if (err) {
+                    return res.send(err);
+                }
+                return res.sendStatus(204);
+            });
         });
   return booksRouter;
 
