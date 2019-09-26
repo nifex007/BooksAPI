@@ -4,17 +4,10 @@ const booksController = require('../controllers/booksController');
 function routes(Book){
     const booksRouter = express.Router();
     const controller = booksController(Book);
+    
     booksRouter.route('/books')
         .post(controller.post)
-        .get((req, res) => {
-            const { query } = req;
-            Book.find(query, (err, books) => {
-            if (err) {
-                return res.send(err);
-            }
-            return res.json(books);
-            });
-        });
+        .get(controller.get);
 
     booksRouter.use('/books/:id', (req, res, next) => {
         Book.findById(req.params.id, (err, book) => {
