@@ -1,5 +1,11 @@
 db.books.insert([
     {
+        title: 'Ògbójú Ọdẹ nínú Igbó Irúnmọlẹ̀',
+        genre: 'Fiction',
+        author: 'Daniel O. Fagunwa',
+        read: false
+    }, 
+    {
         title: 'War and Peace',
         genre: 'Historical Fiction',
         author: 'Lev Nikolayevich Tolstoy',
@@ -42,9 +48,16 @@ db.books.insert([
         read: false
     },
     {
-        title: 'Childhood',
-        genre: 'Biography',
-        author: 'Lev Nikolayevich Tolstoy',
+        title: 'Black Boy',
+        genre: 'Novel, Autobiography, Biography, Künstlerroman',
+        author: 'Richard Wright',
+        read: false
+    }, 
+    {
+        title: 'The Phoenix Project',
+        genre: 'Novel, Fiction',
+        author: 'Gene Kim, Kevin Behr, George Spafford',
         read: false
     }
+
     ])
